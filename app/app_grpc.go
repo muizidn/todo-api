@@ -17,6 +17,7 @@ func setupGrpcServer(port int, db *sql.DB) {
 
 	s := grpc.NewServer()
 	pb.RegisterGreeterServer(s, &serverGreeter{})
+	pb.RegisterTodoServiceServer(s, &serviceTodo{repo: &SQLTodoRepo{db: db}})
 
 	log.Println("server prepared")
 	log.Printf("serving at localhost:%d", port)

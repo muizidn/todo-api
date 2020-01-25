@@ -39,7 +39,9 @@ func _CallerInfo() logrus.Fields {
 	return nil
 }
 
-func (l *logger) WithFields(fields map[string]interface{}) *logger {
+type Fields = logrus.Fields
+
+func (l *logger) WithFields(fields Fields) *logger {
 	logrusFields := logrus.Fields{}
 	for k, v := range fields {
 		logrusFields[k] = v
@@ -49,8 +51,10 @@ func (l *logger) WithFields(fields map[string]interface{}) *logger {
 }
 
 /// ToDo log interface
-func (l *logger) TError(err error) error {
-	l.Error(err)
+func (l *logger) TError(err error, info ...interface{}) error {
+	l.WithFields(Fields{
+		"err": err,
+	}).Error(info...)
 	return err
 }
 
