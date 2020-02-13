@@ -7,6 +7,9 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.3.2
 	github.com/google/uuid v1.1.1
+	github.com/googollee/go-engine.io v1.4.2 // indirect
+	github.com/googollee/go-socket.io v1.4.2
+	github.com/gorilla/websocket v1.4.1 // indirect
 	github.com/mattn/go-sqlite3 v2.0.2+incompatible
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.6.2
