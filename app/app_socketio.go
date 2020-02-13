@@ -2,6 +2,7 @@ package app
 
 import (
 	"net/http"
+	"time"
 
 	socketio "github.com/googollee/go-socket.io"
 )
@@ -17,20 +18,16 @@ func setupSocketIOServer() {
 		s.Emit("hello", "yay")
 		return nil
 	})
-	server.OnEvent("/", "notice", func(s socketio.Conn, msg string) {
-		log.Println("notice:", msg)
-		s.Emit("reply", "have "+msg)
+	server.OnEvent("/", "hello", func(s socketio.Conn, msg string) {
+		log.Println("I got! ", msg)
+		s.Emit("hello", "das ca!")
 	})
-	server.OnEvent("/chat", "msg", func(s socketio.Conn, msg string) string {
-		s.SetContext(msg)
-		return "recv " + msg
+
+	server.OnEvent("/chat", "msg", func(s socketio.Conn, msg string) {
+		log.Println("Say... ", msg)
+		s.Emit("msg", time.Now())
 	})
-	server.OnEvent("/", "bye", func(s socketio.Conn) string {
-		last := s.Context().(string)
-		s.Emit("bye", last)
-		s.Close()
-		return last
-	})
+
 	server.OnError("/", func(e error) {
 		log.Println("meet error:", e)
 	})
